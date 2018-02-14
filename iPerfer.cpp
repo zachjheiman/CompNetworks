@@ -31,7 +31,7 @@ void clientStartup(char* port, char* hostname, char* maxTime ) {
 	memset(&hints, 0, sizeof hints);
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
-	hints.ai_flags = AI_PASSIVE;
+	//hints.ai_flags = AI_PASSIVE;
 
 	if ((status = getaddrinfo(hostname, port, &hints, &servinfo)) != 0) {
 		fprintf(stderr, "gettaddrinfo error: %s\n", gai_strerror(status));
