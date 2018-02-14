@@ -52,15 +52,17 @@ void clientStartup(char* port, char* hostname, char* maxTime ) {
 		timer = time(NULL);
 		counter += 1;
 	}
-	char ones[1000] = { 1 };
+	char ones[1000];
+	fill_n(ones, 1000, 1);
 	send(sockfd, ones, 1000, 0);
 	counter += 1;
-	char * buf[1000] = { 0 };
-
-	recv(sockfd, buf, 1000, 0);
+	char buf[1000] = { 0 };
+	cout << "sent 1's\n";
+	recv(sockfd, ones, 1000, 0);
 	time_t end = time(NULL);
 	int speed = counter / (125 * difftime(end,start));
 	cout << counter << " KB sent at " << speed << " Mbps\n";
+	shutdown(sockfd,2);
 }
 
 void serverStartup(char* port) {
@@ -92,7 +94,7 @@ void serverStartup(char* port) {
 	socklen_t addr_size = sizeof storage_addr;
 	newfd = accept(sockfd, (struct sockaddr *)&storage_addr, &addr_size);
 
-	char * buf[1000] = { 0 };
+	char buf[1000] = { 0 };
 	
 	time_t start = time(NULL);
 
@@ -106,6 +108,7 @@ void serverStartup(char* port) {
 			indicator = 1;
 		}
 		if (buf[0] != 0){
+			cout << "reached FIN message\n";
 			indicator = 1;
 		}
 		counter += 1;
@@ -114,9 +117,12 @@ void serverStartup(char* port) {
 	int speed = counter / (difftime(end, start)*125);
 	cout << counter << " KB read in at " << speed << " Mbps\n";
 
-	char data[1000] = { 1 };
+	char data[1000];
+	fill_n(data, 1000, 1);
 
 	send(newfd, data, 1000, 0);
+	shutdown(newfd, 2);
+	shutdown(sockfd,2);
 }
 
 
