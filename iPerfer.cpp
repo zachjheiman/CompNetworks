@@ -43,13 +43,13 @@ void clientStartup(char* port, char* hostname, char* maxTime ) {
 	if (connectStatus) {
 		cout << "connect error" << endl;
 	}
-	time_t timer;
-	time_t start = time(&timer);
+	time_t timer = time(NULL);
+	time_t start = time(NULL);
 	char data[1000] = { 0 };
 	int counter = 0;
 	while (difftime(timer, start) < endTime) {
 		send(sockfd, data, 1000, 0);
-		time(&timer);
+		timer = time(NULL);
 		counter += 1;
 	}
 	char ones[1000] = { 1 };
