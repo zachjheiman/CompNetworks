@@ -1,9 +1,12 @@
 CPPFLAGS+=-std=c++11 -Wall -Wextra -Wpedantic -O2
 
-all: iPerfer
+all: miProxy
 
-serverTest: iPerfer
-	./iPerfer -s -p 64567
+proxy: miProxy
+	./miProxy log alpha 4500 127.0.0.1
 
-clientTest: iPerfer
-	./iPerfer -c -h 127.0.0.1 -p 64567 -t 5
+server:
+	/usr/local/apache2/bin/apachectl start
+
+firefox:
+	python launch_firefox.py 1
