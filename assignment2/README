@@ -1,0 +1,1 @@
+This folder contains miProxy.cpp and a Makefile. The Makefile has three options - the user can type "make server" to start the apache server, "make firefox" to launch an instance of firefox, and "make proxy" to run miProxy. The makefile sets the value of alpha to .1, log to log.txt, and the port number to 4500, but these can be changed in the Makefile. 
